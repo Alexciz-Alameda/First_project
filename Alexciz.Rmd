@@ -1,0 +1,148 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Load the packages and the dataset itself
+
+```{r}
+library(tidyverse)
+library(readr)
+gun_deaths_cleaned <- read_csv("Downloads/gun_deaths_cleaned.csv")
+View(gun_deaths_cleaned)
+gun_deaths <- gun_deaths_cleaned
+```
+
+1.What is the total number of firearm deaths recorded in the dataset from 2012 to 2014?
+
+```{r}
+count(gun_deaths)
+```
+
+Total \# of deaths from gunfire through 2012-2014 is 98,015.
+
+2.How does the annual trend in firearm deaths change between 2012 and 2014? Is there a significant increase or decrease?
+
+```{r}
+gun_deaths %>% 
+  filter(year== '2012') %>% 
+  count()
+gun_deaths %>% 
+  filter(year== '2013') %>% 
+  count()
+gun_deaths %>% 
+  filter(year== '2014') %>% 
+  count()
+```
+
+In 2012,32615 died to firearm deaths In 2013,32730 died to firearm deaths In 2014,32670 died to firearm deaths There was a small increase followed by the a small decrease the following year.
+
+3.Which category (homicide, suicide, accidental) accounts for the most firearm deaths?
+
+```{r}
+gun_deaths %>% 
+  filter(intent== 'Homicide') %>% 
+  count()
+gun_deaths %>% 
+  filter(intent== 'Suicide') %>% 
+  count()
+gun_deaths %>% 
+  filter(intent== 'Accidental') %>% 
+  count()
+```
+
+Suicides accounted for the most firearm deaths with 62,291 deaths during 2012-2014
+
+4.What is the percentage of firearm suicides compared to total firearm deaths in 2014?
+
+```{r}
+gun_deaths %>% 
+  filter(year== '2014',intent== 'Suicide') %>% 
+  count()
+21039/32670
+```
+
+Around 64%
+
+5.Which age group has the highest number of firearm-related suicides?
+
+```{r}
+clean <- gun_deaths %>% 
+  filter(intent== 'Suicide') %>% 
+  count(age) %>% 
+  summary(age)
+```
+
+Highest number of suicides came in at the age of 54 with 1369 deaths
+
+6.How does firearm homicide affect different racial/ethnic groups? Which group has the highest homicide rate?
+
+```{r}
+gun_deaths %>% 
+  filter(intent=="Homicide") %>% 
+  group_by(race) %>% 
+  count()
+```
+
+7.What is the proportion of male versus female victims in firearm deaths
+
+```{r}
+gun_deaths %>% 
+  group_by(sex) %>% 
+  count()
+
+```
+
+Women account for 14% of firearm deaths,men are at 86%.
+
+8.Which racial/ethnic group shows the highest increase in gun-related deaths from 2012 to 2014?
+
+```{r}
+gun_deaths %>% 
+  group_by(year,race) %>% 
+  count()
+```
+White indiviudlas had the highest growth in gunfire related deaths.
+
+9.Did the overall number of firearm-related deaths increase, decrease, or remain stable from 2012 to 2014?
+```{r}
+gun_deaths %>% 
+  group_by(year) %>% 
+  count()
+```
+Overall number stayed stable.
+
+10.Is there a seasonal pattern in firearm deaths (e.g., higher in summer months or holidays)?
+```{r}
+ggplot<-gun_deaths %>% 
+  group_by(month) %>% 
+  count()
+
+ggplot(data = ggplot) + geom_line(mapping = aes(x = month,y = n)) + labs(title = "Gun Deaths over Time", x = "Month (1-12)",y = "Number of Deaths") + scale_x_continuous(breaks = 1:12,labels = month.abb) + labs(title = "Line Chart Example",x = "Month (1-12)",y = "Number of Deaths")
+```
+Summer has the highest increase in gundeaths overall,while winter had the biggest decrease
+
+11.How do firearm suicide rates among older adults (45–64) compare year-over-year?
+```{r}
+gun_deaths %>% 
+  filter(intent=='Suicide',age<=64 & age>=45,year=='2012') %>% 
+  group_by(year,age) %>% 
+  count()
+gun_deaths %>% 
+  filter(intent=='Suicide',age<=64 & age>=45,year=='2013') %>% 
+  group_by(year,age) %>% 
+  count()
+gun_deaths %>% 
+  filter(intent=='Suicide',age<=64 & age>=45,year=='2014') %>% 
+  group_by(year,age) %>% 
+  count()
+```
+suicide deaths tend to peak during the ages of 47-54 with a somewaht constant number yearly.
+
+12.Is there a correlation between economic conditions and firearm deaths in this period?
+```{r}
+gun_deaths%>%
+  group_by(education) %>% 
+  count()
+```
+People with lower education are responbile for more gundeaths.
