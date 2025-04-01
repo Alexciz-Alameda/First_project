@@ -1,5 +1,4 @@
-Hello, this is my first project i have uploaded.
-I used data from the CDC based on gundeaths collected from 2012-2014. Before my analysis i cleaned the data deleting any entry without a intent,age or race.
-After cleaning i uploaded it to R for cleaning and analysis. 
-i answered a couple questions to get insights into the data, and posted my process of it. 
-Thank you !
+Hello! This is my first uploaded project.
+I analyzed gun death data from the CDC, collected between 2012 and 2014. Before diving into the analysis, I cleaned the dataset by removing any entries missing intent, age, or race.
+After preprocessing, I uploaded the data to R for further cleaning and analysis. I explored key questions to uncover insights and documented my process along the way.
+Thank you!
