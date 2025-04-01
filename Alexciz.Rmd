@@ -145,4 +145,4 @@ gun_deaths%>%
   group_by(education) %>% 
   count()
 ```
-People with lower education are responbile for more gundeaths.
+People with lower education are responsible for more gundeaths.
